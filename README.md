@@ -1,5 +1,7 @@
 # Soviet Project
 
-Static web build for the Soviet Project atlas. GitHub Pages deploys this folder on updates to `main`.
+Public static atlas for post-Soviet modernism, monuments, mosaics, and lost places.
 
-After publishing, set the app bundle's `SPRemoteURL` Info.plist value to the deployed HTTPS URL and rebuild the Mac app once. The app then checks the hosted page at launch and falls back to its bundled copy when offline.
+GitHub Pages serves `index.html` from the root of the `main` branch. Updating that file republishes the site. The macOS app checks the hosted page on startup and uses its bundled copy when offline.
+
+Live site: https://uefa32.github.io/soviet-project/
