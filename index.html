@@ -69,6 +69,19 @@
 .side .source-link{font-family:'DM Mono',monospace;letter-spacing:.01em}
 @media(max-width:850px){.archive-art{height:100px;margin:14px 0 19px}}
 </style>
+<style>
+/* Country picker: compact flag tiles with a consistent archival frame */
+.side .country-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 17px;padding:0 0 16px;border-bottom:1px solid #d0cec3}
+.side .country-button{position:relative;min-width:0;min-height:57px;display:flex;flex-direction:row;justify-content:flex-start;gap:7px;padding:7px 8px;background:linear-gradient(135deg,#fbfaf5,#eeece3);border:1px solid #d5d2c6;border-radius:3px;color:#373a34;font:9px 'DM Mono',monospace;letter-spacing:.01em;text-align:left;box-shadow:0 1px 0 #fff8 inset;transition:transform .15s,border-color .15s,background .15s,box-shadow .15s}
+.side .country-button:after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;border-radius:2px 0 0 2px;transition:background .15s}
+.side .country-button:hover{transform:translateY(-1px);background:#fff;border-color:#aaa79a;box-shadow:0 3px 8px #292b2412}
+.side .country-button.active{background:#f7f2e6;border-color:#b94c38;color:#30342e;box-shadow:0 0 0 1px #b94c3830,inset 0 1px #fff}
+.side .country-button.active:after{background:#b94c38}
+.side .country-flag-img{width:30px;height:20px;flex:none;object-fit:cover;border-radius:3px;border:1px solid #5b5a512c;box-shadow:0 1px 2px #27291f26}
+.side .country-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side .country-button:focus-visible{outline:2px solid #b94c38;outline-offset:2px}
+@media(max-width:510px){.side .country-buttons{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.side .country-button{min-height:51px;padding:6px}.side .country-flag-img{width:27px;height:18px}}
+</style>
 </head>
 <body>
 <div class="shell">
@@ -417,6 +430,6 @@ countrySelect.onchange=()=>{selectedCountry=countrySelect.value;selected=null;re
 }
 </script>
 <script>
-(function(){const select=document.getElementById('countrySelect'),host=document.getElementById('countryButtons');if(!select||!host)return;const flags={'All countries':'🌐','Armenia':'🇦🇲','Armenia':'🇦🇲','Azerbaijan':'🇦🇿','Azerbaijan':'🇦🇿','Belarus':'🇧🇾','Estonia':'🇪🇪','Estonia':'🇪🇪','Georgia':'🇬🇪','Georgia':'🇬🇪','Kazakhstan':'🇰🇿','Kazakhstan':'🇰🇿','Kyrgyzstan':'🇰🇬','Kyrgyzstan':'🇰🇬','Latvia':'🇱🇻','Latvia':'🇱🇻','Lithuania':'🇱🇹','Lithuania':'🇱🇹','Moldova':'🇲🇩','Moldova':'🇲🇩','Russia':'🇷🇺','Russia':'🇷🇺','Tajikistan':'🇹🇯','Tajikistan':'🇹🇯','Turkmenistan':'🇹🇲','Ukraine':'🇺🇦','Uzbekistan':'🇺🇿','Uzbekistan':'🇺🇿'};function draw(){host.replaceChildren();Array.from(select.options).forEach(option=>{const button=document.createElement('button');button.type='button';button.className='country-button'+(select.value===option.value?' active':'');button.setAttribute('aria-pressed',String(select.value===option.value));const flag=document.createElement('span');flag.className='country-flag';flag.setAttribute('aria-hidden','true');flag.textContent=flags[option.value]||'🏳️';button.append(flag,document.createTextNode(option.textContent));button.onclick=()=>{select.value=option.value;select.dispatchEvent(new Event('change'));draw()};host.appendChild(button)})}select.addEventListener('change',draw);draw()})();
+(function(){const select=document.getElementById('countrySelect'),host=document.getElementById('countryButtons');if(!select||!host)return;const slugs={'All countries':'all','Armenia':'armenia','Azerbaijan':'azerbaijan','Belarus':'belarus','Estonia':'estonia','Georgia':'georgia','Kazakhstan':'kazakhstan','Kyrgyzstan':'kyrgyzstan','Latvia':'latvia','Lithuania':'lithuania','Moldova':'moldova','Russia':'russia','Tajikistan':'tajikistan','Turkmenistan':'turkmenistan','Ukraine':'ukraine','Uzbekistan':'uzbekistan'};function draw(){host.replaceChildren();Array.from(select.options).forEach(option=>{const button=document.createElement('button');button.type='button';button.className='country-button'+(select.value===option.value?' active':'');button.setAttribute('aria-pressed',String(select.value===option.value));const flag=document.createElement('img');flag.className='country-flag-img';flag.src=`assets/flags/${slugs[option.value]||'all'}.svg`;flag.alt='';flag.setAttribute('aria-hidden','true');const name=document.createElement('span');name.className='country-name';name.textContent=option.textContent;button.append(flag,name);button.onclick=()=>{select.value=option.value;select.dispatchEvent(new Event('change'));draw()};host.appendChild(button)})}select.addEventListener('change',draw);draw()})();
 </script>
 </body></html>
